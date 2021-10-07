@@ -1,0 +1,202 @@
+﻿<html>
+<head>
+    <title>User Login form</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <!-- LOGIN MODULE -->
+        <div class="login">
+            <div class="wrap">
+                <!-- TOGGLE -->
+
+
+                <div id="toggle-wrap">
+                    <div id="toggle-terms">
+                        <div id="cross">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- SLIDER -->
+                <div class="content">
+
+                    <div class="logo">
+                        <a href="#"><img src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/logo.png" alt="" /></a>
+                    </div>
+
+                    <div id="slideshow">
+                        <div class="one">
+                            <h2><span>LEADER</span></h2>
+                            <p>Tata Power-DDL is acknowledged for its consumer-friendly practices. Since privatization, the Aggregate Technical & Commercial (AT&C) losses in Tata Power-DDL areas have shown a record decline.</p>
+                        </div>
+                        <div class="two">
+                            <h2><span>SUSTAINABLE</span></h2>
+                            <p>TATA Power-DDL has also added solar generation as a part of its sustainable initiatives since 2008, and has installed fifteen (15) Solar Plants in its Licensed Area with a total generation capacity is 1.8 MW.</p>
+                        </div>
+                        <div class="three">
+                            <h2><span>EXPANDING</span></h2>
+                            <p>Tata Power-DDL's change management experience, distributed leadership system, adoption of latest technology; robust competence development process and innovative & open work culture are the key strategic booster</p>
+                        </div>
+                        <div class="four">
+                            <h2><span>EXPERTS</span></h2>
+                            <p>Tata Power-DDL is focused and committed to the road ahead and is exploring new opportunities to replicate its experience of distribution reforms both in India and abroad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user">
+
+                    <div class="form-wrap">
+
+                        <div class="tabs">
+                            <h3 class="login-tab"><a class="log-in active" href="#login-tab-content"><span>Login</span></a></h3>
+                        </div>
+
+                        <div class="tabs-content">
+
+
+                            <form asp-action="Login" id="form" class="login-form" asp-controller="Account">
+                                <div id="login-tab-cotent" class="active">
+                                    <label asp-for="Email" class="control-label"></label>
+                                    <input asp-for="Email" class="form-control" placeholder="Name" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div id="login-tab-cotent" class="active">
+                                    <label asp-for="Password" class="control-label"></label>
+                                    <input asp-for="Password" type="password" class="form-control" id="user_pass" placeholder="Password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="button">
+                                    <input type="submit" class="button" value="Login" />
+
+                                </div>
+                            </form>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <script>
+
+        /* LOGIN - MAIN.JS - dp 2017 */
+
+        // LOGIN TABS
+        $(function () {
+            var tab = $('.tabs h3 a');
+            tab.on('click', function (event) {
+                event.preventDefault();
+                tab.removeClass('active');
+                $(this).addClass('active');
+                tab_content = $(this).attr('href');
+                $('div[id$="tab-content"]').removeClass('active');
+                $(tab_content).addClass('active');
+            });
+        });
+
+        // SLIDESHOW
+        $(function () {
+            $('#slideshow > div:gt(0)').hide();
+            setInterval(function () {
+                $('#slideshow > div:first')
+                    .fadeOut(1000)
+                    .next()
+                    .fadeIn(1000)
+                    .end()
+                    .appendTo('#slideshow');
+            }, 3850);
+        });
+
+        // CUSTOM JQUERY FUNCTION FOR SWAPPING CLASSES
+        (function ($) {
+            'use strict';
+            $.fn.swapClass = function (remove, add) {
+                this.removeClass(remove).addClass(add);
+                return this;
+            };
+        }(jQuery));
+
+        // SHOW/HIDE PANEL ROUTINE (needs better methods)
+        // I'll optimize when time permits.
+        $(function () {
+            $('.agree,.forgot, #toggle-terms, .log-in, .sign-up').on('click', function (event) {
+                event.preventDefault();
+                var terms = $('.terms'),
+                    recovery = $('.recovery'),
+                    close = $('#toggle-terms'),
+                    arrow = $('.tabs-content .fa');
+                if ($(this).hasClass('agree') || $(this).hasClass('log-in') || ($(this).is('#toggle-terms')) && terms.hasClass('open')) {
+                    if (terms.hasClass('open')) {
+                        terms.swapClass('open', 'closed');
+                        close.swapClass('open', 'closed');
+                        arrow.swapClass('active', 'inactive');
+                    } else {
+                        if ($(this).hasClass('log-in')) {
+                            return;
+                        }
+                        terms.swapClass('closed', 'open').scrollTop(0);
+                        close.swapClass('closed', 'open');
+                        arrow.swapClass('inactive', 'active');
+                    }
+                }
+                else if ($(this).hasClass('forgot') || $(this).hasClass('sign-up') || $(this).is('#toggle-terms')) {
+                    if (recovery.hasClass('open')) {
+                        recovery.swapClass('open', 'closed');
+                        close.swapClass('open', 'closed');
+                        arrow.swapClass('active', 'inactive');
+                    } else {
+                        if ($(this).hasClass('sign-up')) {
+                            return;
+                        }
+                        recovery.swapClass('closed', 'open');
+                        close.swapClass('closed', 'open');
+                        arrow.swapClass('inactive', 'active');
+                    }
+                }
+            });
+        });
+
+        // DISPLAY MSSG
+        $(function () {
+            $('.recovery .button').on('click', function (event) {
+                event.preventDefault();
+                $('.recovery .mssg').addClass('animate');
+                setTimeout(function () {
+                    $('.recovery').swapClass('open', 'closed');
+                    $('#toggle-terms').swapClass('open', 'closed');
+                    $('.tabs-content .fa').swapClass('active', 'inactive');
+                    $('.recovery .mssg').removeClass('animate');
+                }, 2500);
+            });
+        });
+
+        // DISABLE SUBMIT FOR DEMO
+        $(function () {
+            $('.button').on('click', function (event) {
+                $(this).stop();
+                event.preventDefault();
+                return false;
+            });
+        });
+    </script>
+</body>
+
+
+</html>
+
+
